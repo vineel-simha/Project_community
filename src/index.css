@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Cormorant+Garamond:ital,wght@1,600&family=Outfit:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Custom Properties ─────────────────────────────────── */
+:root {
+  --font-heading:   'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-outfit:    'Outfit', system-ui, sans-serif;
+  --font-editorial: 'Cormorant Garamond', Georgia, serif;
+  --font-mono:      'IBM Plex Mono', ui-monospace, monospace;
+  --font-body:      'Plus Jakarta Sans', system-ui, sans-serif;
+
+  --color-moss:        #2E4036;
+  --color-forest:      #173D2C;
+  --color-clay:        #CC5833;
+  --color-clay-dark:   #A8431F;
+  --color-cream:       #F2F0E9;
+  --color-surface:     #FFFFFF;
+  --color-sage:        #A9C5A9;
+  --color-charcoal:    #1A1A1A;
+  --color-muted:       #55615A;
+  --color-line:        #DDE2D6;
+}
+
+/* ─── Base Resets ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  background-color: var(--color-cream);
+  color: var(--color-moss);
+  line-height: 1.6;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Fluid Full-Width Layout Utilities ─────────────────────── */
+.layout-fluid {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 72px);
+  box-sizing: border-box;
+}
+
+.layout-full {
+  width: 100%;
+  max-width: none;
+  padding-inline: clamp(20px, 4vw, 72px);
+  box-sizing: border-box;
+}
+
+/* ─── Noise Overlay ─────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.045;
+  filter: url(#cf-noise);
+  background: transparent;
+}
+
+/* ─── Skip Link ─────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 10000;
+  background: var(--color-clay);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0 0 0.75rem 0.75rem;
+  font-family: var(--font-outfit);
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ─── Custom Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-cream); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-sage); }
+
+/* ─── Typography Utilities ──────────────────────────────────── */
+.font-heading    { font-family: var(--font-heading); }
+.font-editorial  { font-family: var(--font-editorial); }
+.font-outfit     { font-family: var(--font-outfit); }
+.font-mono-cf    { font-family: var(--font-mono); }
+
+/* ─── Focus Visible Utility ─────────────────────────────────── */
+.focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-clay);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Scroll Margin for Fixed Navbar ───────────────────────── */
+[id] {
+  scroll-margin-top: 6rem;
+}
+
+/* ─── Selection Colour ──────────────────────────────────────── */
+::selection {
+  background: rgba(204, 88, 51, 0.25);
+  color: var(--color-moss);
+}
+
+/* ─── Reduced Motion ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Noise overlay canvas fallback (non-SVG browsers) ─────── */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
